@@ -6,8 +6,9 @@ const Constraint = Matter.Constraint;
 var engine, world;
 var pig1, pig2, pig3, ground;
 var box1;
-var BgImg = loadImage("Sprites/bg1.png");
-var platform, Joey, slingshot, score;
+//var BgImg = loadImage("Sprites/bg1.png");
+var platform, Joey, slingshot;
+var score = 0;
 
 var gameState = "onSling"
 
@@ -18,6 +19,7 @@ var gameState = "onSling"
 
 function setup() {
   createCanvas(1200,400);
+
   engine = Engine.create();
   world = engine.world;
 
@@ -55,15 +57,16 @@ function setup() {
 function draw() {
   
 
-  if(BgImg){
-    background(BgImg);
+  //if(BgImg)
+    //background(BgImg);
+
+    background(255)
 
 
     noStroke();
     textSize(35);
-    fill("white")
-    text("Score" + score, width-300, 50);
-  }
+    text("Score: " + score, width-300, 50);
+  
 
     Engine.update(engine);
     box1.display();
@@ -88,7 +91,7 @@ function draw() {
 
    
 
-    bird.display(gameState);
+    Joey.display(gameState);
     platform.display();
     slingshot.display(); 
 
@@ -104,14 +107,14 @@ function mouseDragged(){
 
 function mouseReleased(){
 
-  slingshot.fly();
+  slingshot.detach();
   gameState = "launched"
 }
 
 
 function keyPressed(){
 
-  if(keyCode === 32 && bird.body.speed < 1 && gameState === "launched"){
+  if(keyCode === 32 && gameState === "launched"){
 
     Joey.trajectory = [];
     Matter.Body.setPosition(Joey.body, {x: 200, y:50})
